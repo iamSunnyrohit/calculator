@@ -51,6 +51,7 @@ const App = () => {
   return (
     <>
         <div className='container'>
+            <h1>Calculator</h1>
             <form>
                 <input type='text' value= {result} />
             </form>
