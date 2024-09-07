@@ -18,7 +18,8 @@ const App = () => {
     } 
     const calculate = () => {
         try {
-            setResult(eval(result).toString());// eslint-disable-next-line
+            const func = new Function('result');
+            setResult(func.toString());// eslint-disable-next-line
         }
         catch(err) {
             setResult("ERROR");
