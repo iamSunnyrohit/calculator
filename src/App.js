@@ -18,10 +18,33 @@ const App = () => {
     } 
     const calculate = () => {
         try {
-            const func = new Function('result');
-            setResult(func.toString());// eslint-disable-next-line
-        }
-        catch(err) {
+            // Replace Function constructor with a safe evaluation method
+            const evalExpression = (exp) => {
+                const operators = {'+': (a, b) => a + b, '-': (a, b) => a - b, '*': (a, b) => a * b, '/': (a, b) => a / b};
+                const tokens = exp.match(/(\d+\.?\d*|\+|-|\*|\/)/g) || [];
+                const stack = [];
+                let currentOperator = '+';
+                
+                for (const token of tokens) {
+                    if (operators[token]) {
+                        currentOperator = token;
+                    } else {
+                        const number = parseFloat(token);
+                        if (currentOperator === '+' || currentOperator === '-') {
+                            stack.push(currentOperator === '+' ? number : -number);
+                        } else if (currentOperator === '*') {
+                            stack.push(stack.pop() * number);
+                        } else if (currentOperator === '/') {
+                            stack.push(stack.pop() / number);
+                        }
+                    }
+                }
+                
+                return stack.reduce((sum, num) => sum + num, 0);
+            };
+
+            setResult(evalExpression(result).toString());
+        } catch(err) {
             setResult("ERROR");
         }
     }
