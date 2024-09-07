@@ -80,3 +80,9 @@ button:active {
     background: aqua;
     color: #262834;
 }
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
